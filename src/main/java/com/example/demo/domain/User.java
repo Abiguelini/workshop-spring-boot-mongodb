@@ -23,7 +23,7 @@ public class User implements Serializable {
 	public User(String id, String name, String email) {
 		super();
 		this.id = id;
-		name = name;
+		this.name = name;
 		this.email = email;
 	}
 
