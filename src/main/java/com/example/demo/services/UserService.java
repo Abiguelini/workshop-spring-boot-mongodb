@@ -20,20 +20,46 @@ public class UserService {
 	public List<User> findAll() {
 		return repo.findAll();
 	}
-	
+
 	public Optional<User> findById(String id) {
 		Optional<User> user = repo.findById(id);
-		if(user == null) {
+		if (user == null) {
 			throw new ObjectNotFoundException("Usuário não encontrado");
 		}
 		return user;
 	}
-	
+
 	public User insert(User user) {
+
 		return repo.insert(user);
 	}
-	
+
+	public void deleteId(String id) {
+		findById(id);
+		repo.deleteById(id);
+
+	}
+
+	public User update(User entity) {
+
+		User newObj = repo.findById(entity.getId()).get();
+
+		updateData(newObj, entity);
+
+		return repo.save(newObj);
+
+	}
+
+	private void updateData(User newObj, User obj) {
+
+		newObj.setName(obj.getName());
+
+		newObj.setEmail(obj.getEmail());
+
+	}
+
 	public User fromDTO(UserDTO userDTO) {
 		return new User(userDTO.getId(), userDTO.getName(), userDTO.getEmail());
 	}
+
 }
